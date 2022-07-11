@@ -11,3 +11,7 @@ end
 if type -q npm
      set PATH $PATH ~/.npm-global/bin:$PATH
 end
+
+if test -e ~/bin
+     set PATH $PATH ~/bin
+end
