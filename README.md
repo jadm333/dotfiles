@@ -1,6 +1,12 @@
 # dotfiles
 Personal dotfiles using chezmoi
-
+Init:
 ```bash
-chezmoi init --apply git@github.com:jadm333/dotfiles.git
+chezmoi init jadm333 --ssh
+```
+
+Add new dotfile:
+```bash
+chezmoi add path/to/dotfile
+chezmoi add --template path/to/dotfile
 ```
