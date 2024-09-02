@@ -6,29 +6,26 @@ vim.wo.relativenumber = true
 
 -- set leader
 vim.g.mapleader = ","
--- BOOTSTRAP the plugin manager `lazy.nvim` https://lazy.folke.io/installation
+-- BOOTStp:prepend(lazypath)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-local lazyLocallyAvailable = vim.uv.fs_stat(lazypath) ~= nil
-if not lazyLocallyAvailable then
-	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath }):wait()
-	if out.code ~= 0 then
-		vim.api.nvim_echo({
-			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
-			{ "\nPress any key to exit..." },
-		}, true, {})
-		vim.fn.getchar()
-		os.exit(1)
-	end
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
-
 --------------------------------------------------------------------------------
 
 local plugins = {
 	{'hashivim/vim-terraform', lazy=true},
-	{'mtoohey31/cmp-fish', lazy=true},
 	-- which key pop up
 	{
 		"folke/which-key.nvim",
@@ -164,7 +161,8 @@ local plugins = {
 				-- ensures that when there is no suggestion window open, the mapping
 				-- falls back to the default behavior (adding indentation).
 				mappings = cmp.mapping.preset.insert({
-					["<CR>"] = cmp.mapping.confirm({ select = true }), -- true = autoselect first entry
+					["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+					["<Cr>"] = cmp.mapping.confirm({ select = true }),
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
@@ -188,7 +186,7 @@ local plugins = {
 	-- PYTHON REPL
 	-- A basic REPL that opens up as a horizontal split
 	-- - use `<leader>i` to toggle the REPL
-	-- - use `<leader>I` to restart the REPL
+	-- - use `<leader>I` to restart the REPLnvim-cmp
 	-- - `+` serves as the "send to REPL" operator. That means we can use `++`
 	-- to send the current line to the REPL, and `+j` to send the current and the
 	-- following line to the REPL, like we would do with other vim operators.
