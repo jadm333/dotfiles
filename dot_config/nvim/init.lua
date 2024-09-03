@@ -3,7 +3,7 @@ vim.o.mouse = 'a'
 -- Set line numbers and relative line numbers
 vim.wo.number = true
 vim.wo.relativenumber = true
-
+vim.g.python3_host_prog = '/home/peps/miniconda3/bin/python'
 -- set leader
 vim.g.mapleader = ","
 -- BOOTStp:prepend(lazypath)
@@ -26,6 +26,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
 	{'hashivim/vim-terraform', lazy=true},
+	{"kmontocam/nvim-conda", dependencies = { "nvim-lua/plenary.nvim" }},
 	-- which key pop up
 	{
 		"folke/which-key.nvim",
@@ -154,15 +155,16 @@ local plugins = {
 				-- register the lsp as completion provider
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
-					{ name = "fish" , option = { fish_path = "/opt/homebrew/bin/fish" }}
+					{ name = "buffer" },
+					{ name = 'path' },
+					-- { name = "fish" , option = { fish_path = "/opt/homebrew/bin/fish" }}
 				}),
 
 				-- Define the mappings for the completion. The `fallback()` call
 				-- ensures that when there is no suggestion window open, the mapping
 				-- falls back to the default behavior (adding indentation).
 				mappings = cmp.mapping.preset.insert({
-					["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-					["<Cr>"] = cmp.mapping.confirm({ select = true }),
+					["<C-Space>"] = cmp.mapping.confirm({ select = true }),
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
