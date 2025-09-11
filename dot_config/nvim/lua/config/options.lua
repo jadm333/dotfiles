@@ -6,4 +6,6 @@ vim.o.mouse = 'a'
 
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.g.python3_host_prog = '/opt/homebrew/Caskroom/miniconda/base/bin/python'
+vim.wo.foldenable = false
+
+vim.g.material_style = "deep ocean"

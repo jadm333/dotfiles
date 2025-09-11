@@ -1,0 +1,9 @@
+# Super is cmd in macos
+font-family = "JetBrains Mono"
+font-size = 17
+theme = Dracula
+background-opacity = 0.90
+# Quick terminal
+# quick-terminal-autohide = false
+# Keybindings
+keybind = global:cmd+grave_accent=toggle_quick_terminal

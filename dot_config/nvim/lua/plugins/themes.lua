@@ -1,16 +1,20 @@
 return {
-    -- In neovim, the choice of color schemes is unfortunately not purely
-	-- aesthetic – treesitter-based highlighting or newer features like semantic
-	-- highlighting are not always supported by a color scheme. It's therefore
-	-- recommended to use one of the popular, and actively maintained ones to get
-	-- the best syntax highlighting experience:
-	-- https://dotfyle.com/neovim/colorscheme/top
 	{
-		"folke/tokyonight.nvim",
-		-- ensure that the color scheme is loaded at the very beginning
-		lazy = false,
-		priority = 1000,
-		-- enable the colorscheme
-		config = function() vim.cmd.colorscheme("tokyonight") end,
+		"marko-cerovac/material.nvim",
+		version = "*",
+		config = function()
+			require("material").setup({
+				contrast = {
+					sidebars = true, -- Enable contrast for sidebars, such as NvimTree and Telescope
+					floating_windows = true, -- Enable contrast for floating windows
+				},
+				plugins = {
+					telescope = true, -- Enable telescope plugin
+					nvimtree = true, -- Enable nvim-tree plugin
+				},
+				
+			})
+			vim.cmd.colorscheme("material")
+		end,
 	},
 }

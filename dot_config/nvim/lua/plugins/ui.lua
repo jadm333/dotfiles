@@ -43,4 +43,10 @@ return {
 		'nvim-lualine/lualine.nvim',
 		dependencies = { 'nvim-tree/nvim-web-devicons' }
 	},
+	-- Required by whichkey
+	{
+    'nvim-telescope/telescope.nvim', tag = '0.1.x',
+      dependencies = { 'nvim-lua/plenary.nvim' }
+    },
+
 }
