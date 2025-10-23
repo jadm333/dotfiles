@@ -1,0 +1,14 @@
+# SSH Configuration
+# This file is managed by chezmoi
+
+Host rpi
+    HostName {{ .rpi_ip }}
+    User pi
+    IdentityFile ~/.ssh/id_ed25519_pi
+    AddKeysToAgent yes
+    IdentitiesOnly yes
+
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
