@@ -7,5 +7,3 @@ vim.o.mouse = 'a'
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.wo.foldenable = false
-
-vim.g.material_style = "deep ocean"

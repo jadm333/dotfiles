@@ -1,36 +1,75 @@
 return {
-    -- treesitter for syntax highlighting
-	-- - auto-installs the parser for python
 	{
 		"nvim-treesitter/nvim-treesitter",
-		-- automatically update the parsers with every new release of treesitter
+		branch = "main",
+		version = false, -- last release is way too old and doesn't work on Windows
 		build = ":TSUpdate",
-
-		-- since treesitter's setup call is `require("nvim-treesitter.configs").setup`,
-		-- instead of `require("nvim-treesitter").setup` like other plugins do, we
-		-- need to tell lazy.nvim which module to via the `main` key
-		main = "nvim-treesitter.configs",
-
+		event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
+		cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
 		opts = {
-			highlight = { enable = true }, -- enable treesitter syntax highlighting
-			indent = { enable = true }, -- better indentation behavior
+			highlight = { enable = true },
+			indent = { enable = true },
 			ensure_installed = {
-				-- auto-install the Treesitter parser for python and related languages
-				"python",
-				"toml",
-				"rst",
-				"ninja",
+				"bash",
+				"c",
+				"diff",
+				"dockerfile",
+				"fish",
+				"html",
+				"javascript",
+				"jsdoc",
+				"json",
+				"jsonc",
+				"lua",
+				"luadoc",
+				"luap",
 				"markdown",
 				"markdown_inline",
-				"fish",
-				"json",
+				"ninja",
+				"printf",
+				"python",
 				"query",
+				"regex",
+				"rst",
+				"toml",
+				"tsx",
+				"typescript",
+				"vim",
 				"vimdoc",
-                "dockerfile",
-                "terraform",
-                "yaml",
-				"lua",
+				"xml",
+				"yaml",
 			},
 		},
+		config = function(_, opts)
+			require("nvim-treesitter.configs").setup(opts)
+
+			-- Check for missing parsers and notify
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function(args)
+					local lang = vim.treesitter.language.get_lang(args.match)
+					if not lang then
+						return
+					end
+
+					-- Check if parser is installed
+					local ok = pcall(vim.treesitter.language.add, lang)
+					if not ok then
+						-- Parser not installed, show notification
+						if vim.fn.exists(":Snacks") == 2 then
+							require("snacks").notifier.notify(
+								string.format("Treesitter parser for '%s' is not installed. Run :TSInstall %s", lang, lang),
+								"warn",
+								{ title = "Treesitter" }
+							)
+						else
+							vim.notify(
+								string.format("Treesitter parser for '%s' is not installed. Run :TSInstall %s", lang, lang),
+								vim.log.levels.WARN
+							)
+						end
+					end
+				end,
+			})
+		end,
 	},
 }

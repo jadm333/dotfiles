@@ -1,20 +1,58 @@
 return {
 	{
-		"marko-cerovac/material.nvim",
-		version = "*",
+		"catppuccin/nvim",
+		lazy = false,
+		priority = 1000,
+		name = "catppuccin",
 		config = function()
-			require("material").setup({
-				contrast = {
-					sidebars = true, -- Enable contrast for sidebars, such as NvimTree and Telescope
-					floating_windows = true, -- Enable contrast for floating windows
+			require("catppuccin").setup({
+				lsp_styles = {
+				underlines = {
+					errors = { "undercurl" },
+					hints = { "undercurl" },
+					warnings = { "undercurl" },
+					information = { "undercurl" },
 				},
-				plugins = {
-					telescope = true, -- Enable telescope plugin
-					nvimtree = true, -- Enable nvim-tree plugin
 				},
-				
+				integrations = {
+				aerial = true,
+				alpha = true,
+				cmp = true,
+				dashboard = true,
+				flash = true,
+				fzf = true,
+				grug_far = true,
+				gitsigns = true,
+				headlines = true,
+				illuminate = true,
+				indent_blankline = { enabled = true },
+				leap = true,
+				lsp_trouble = true,
+				mason = true,
+				mini = true,
+				navic = { enabled = true, custom_bg = "lualine" },
+				neotest = true,
+				neotree = true,
+				noice = true,
+				notify = true,
+				snacks = true,
+				telescope = true,
+				treesitter_context = true,
+				which_key = true,
+				},
 			})
-			vim.cmd.colorscheme("material")
+			vim.cmd.colorscheme("catppuccin")
 		end,
-	},
+		specs = {
+			{
+			"akinsho/bufferline.nvim",
+			optional = true,
+			opts = function(_, opts)
+				if (vim.g.colors_name or ""):find("catppuccin") then
+				opts.highlights = require("catppuccin.special.bufferline").get_theme()
+				end
+			end,
+			},
+		},
+		}
 }
