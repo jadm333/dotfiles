@@ -3,7 +3,6 @@ font-family = "JetBrains Mono"
 font-size = 14
 theme = Dracula
 background-opacity = 0.90
-
 # Allow cursor shape changes (for Neovim modes)
 shell-integration-features = cursor,sudo
 # Quick terminal
@@ -11,3 +10,6 @@ quick-terminal-autohide = false
 # Keybindings
 # keybind = global:cmd+grave_accent=toggle_quick_terminal
 keybind = global:alt+space=toggle_quick_terminal
+
+link-url = true
+clipboard-trim-trailing-spaces = true

@@ -41,7 +41,7 @@ return {
 			},
 		},
 		config = function(_, opts)
-			require("nvim-treesitter.configs").setup(opts)
+			require("nvim-treesitter").setup(opts)
 
 			-- Check for missing parsers and notify
 			vim.api.nvim_create_autocmd("FileType", {

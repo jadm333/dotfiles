@@ -2,7 +2,3 @@
 
 LICENSE
 README.md
-
-{{- if ne .chezmoi.os "darwin" }}
-.hammerspoon
-{{- end }}

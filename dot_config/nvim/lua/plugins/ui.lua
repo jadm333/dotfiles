@@ -11,9 +11,10 @@ return {
 			require("nvim-tree").setup({
 				filters = {
 					dotfiles = false,
+					git_ignored = false,
 				},
 				view = {
-					width = 50,
+					width = 30,
 				}
 			})
 		end,
@@ -187,9 +188,59 @@ return {
 	},
 	-- Required by whichkey
 	{
-    'nvim-telescope/telescope.nvim', tag = '0.1.x',
-      dependencies = { 'nvim-lua/plenary.nvim' }
-    },
+		'nvim-telescope/telescope.nvim',
+		dependencies = { 'nvim-lua/plenary.nvim' },
+		config = function()
+			require('telescope').setup({
+				defaults = {
+					layout_strategy = "horizontal",
+					layout_config = {
+						horizontal = {
+							prompt_position = "top",
+							preview_width = 0.55,
+						},
+						width = 0.87,
+						height = 0.80,
+					},
+					path_display = { "smart" },
+					sorting_strategy = "ascending",
+					file_ignore_patterns = { ".git/" },
+					vimgrep_arguments = {
+						"rg",
+						"--color=never",
+						"--no-heading",
+						"--with-filename",
+						"--line-number",
+						"--column",
+						"--smart-case",
+						"--hidden",
+					},
+					preview = {
+						wrap = true,
+					},
+					set_env = {
+						["COLORTERM"] = "truecolor",
+					},
+				},
+			})
+
+			-- Set line numbers and wrap in preview window
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "TelescopePreviewerLoaded",
+				callback = function()
+					vim.wo.number = true
+					vim.wo.wrap = true
+				end,
+			})
+		end,
+		keys = {
+			{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
+			{ "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
+			{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+			{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help Tags" },
+			{ "<leader>fo", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
+		},
+	},
 	-- Top buffer (oipen files)
 	{
 		"akinsho/bufferline.nvim",
@@ -215,6 +266,23 @@ return {
 			right_mouse_command = function(n) Snacks.bufdelete(n) end,
 			diagnostics = "nvim_lsp",
 			always_show_bufferline = false,
+			-- Filter out terminal buffers (like opencode, lazygit, etc.)
+			custom_filter = function(buf_number)
+				local buftype = vim.bo[buf_number].buftype
+				local filetype = vim.bo[buf_number].filetype
+				-- Exclude terminal buffers
+				if buftype == "terminal" then
+					return false
+				end
+				-- Exclude specific filetypes
+				if filetype == "snacks_terminal" or filetype == "opencode" then
+					return false
+				end
+				return true
+			end,
+			name_formatter = function(buf)
+				return vim.fn.fnamemodify(buf.name, ':t')
+			end,
 			diagnostics_indicator = function(_, _, diag)
 				local icons = {
 					Error = " ",
@@ -236,9 +304,6 @@ return {
 				text = "Neo-tree",
 				highlight = "Directory",
 				text_align = "left",
-				},
-				{
-				filetype = "snacks_layout_box",
 				},
 			},
 			---@param opts bufferline.IconFetcherOpts
@@ -345,43 +410,31 @@ return {
 	{
 		"folke/snacks.nvim",
 		opts = function()
-			-- Terminal navigation helper
-			local function term_nav(dir)
-				---@param self snacks.terminal
-				return function(self)
-					return self:is_floating() and "<c-" .. dir .. ">" or vim.schedule(function()
-						vim.cmd.wincmd(dir)
-					end)
-				end
-			end
-
 			return {
 				indent = { enabled = true },
 				input = { enabled = true },
 				notifier = { enabled = true },
+				picker = { enabled = true },
 				scope = { enabled = true },
 				scroll = { enabled = true },
 				statuscolumn = { enabled = false }, -- we set this in options.lua
-				-- toggle = { map = LazyVim.safe_keymap_set },
-				-- words = { enabled = true },
 				bigfile = { enabled = true, size = 10 * 1024 * 1024 },
 				quickfile = { enabled = true },
-				terminal = {
+				cursor = { enable = false },
+				terminal = { enabled = false },
+				lazygit = {
+					enabled = true,
 					win = {
-						height = 0.2, -- 20% of screen height
-						keys = {
-							nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
-							nav_j = { "<C-j>", term_nav("j"), desc = "Go to Lower Window", expr = true, mode = "t" },
-							nav_k = { "<C-k>", term_nav("k"), desc = "Go to Upper Window", expr = true, mode = "t" },
-							nav_l = { "<C-l>", term_nav("l"), desc = "Go to Right Window", expr = true, mode = "t" },
-						},
+						style = "lazygit",
+						width = 0.95,  -- 90% of screen width
+						height = 0.95, -- 90% of screen height
 					},
 				},
 			}
 		end,
 		-- stylua: ignore
 		keys = {
-			{ "<c-/>", function() Snacks.terminal() end, desc = "Toggle Terminal" },
+			{ "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
 			{ "<leader>n", function()
 			if Snacks.config.picker and Snacks.config.picker.enabled then
 				Snacks.picker.notifications()
@@ -392,4 +445,23 @@ return {
 			{ "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
 		},
 	},
+	{
+		"sphamba/smear-cursor.nvim",
+		event = "VeryLazy",
+		cond = vim.g.neovide == nil,
+		opts = {
+			hide_target_hack = true,
+			cursor_color = "none",
+		},
+		specs = {
+			-- disable mini.animate cursor
+			{
+			"nvim-mini/mini.animate",
+			optional = true,
+			opts = {
+				cursor = { enable = false },
+			},
+			},
+		},
+	}
 }

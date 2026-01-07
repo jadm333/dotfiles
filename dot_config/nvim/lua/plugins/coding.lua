@@ -29,7 +29,12 @@ return {
 				vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
 			end)
 			local ibl = require("ibl")
-			ibl.setup({indent = { highlight = highlight } })
+			ibl.setup({
+				indent = {
+					highlight = highlight,
+					char = "▏"  -- Thin vertical line
+				}
+			})
 		end
 	},
 
@@ -53,6 +58,7 @@ return {
 	{
 		"chrisgrieser/nvim-puppeteer",
 		dependencies = "nvim-treesitter/nvim-treesitter",
+		lazy = false,
 	},
 	-- Match brakets
 	{
@@ -79,5 +85,6 @@ return {
 		"folke/ts-comments.nvim",
 		event = "VeryLazy",
 		opts = {},
-	}
+	},
+	
 }

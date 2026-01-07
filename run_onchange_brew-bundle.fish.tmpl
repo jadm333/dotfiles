@@ -1,0 +1,7 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env fish
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+# This script runs automatically when the Brewfile changes
+
+brew bundle --file="{{ .chezmoi.sourceDir }}/Brewfile"
+{{ end -}}

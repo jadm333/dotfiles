@@ -21,3 +21,12 @@ vim.api.nvim_create_autocmd("FileType", {
 		iabbrev("none", "None")
 	end,
 })
+
+-- Prevent terminal buffers in floating windows from appearing in main editor
+-- This fixes the "mirrored terminal" issue with OpenCode/Claude when closing all buffers
+vim.api.nvim_create_autocmd("TermOpen", {
+	callback = function()
+		-- Make terminal buffers unlisted so they won't be shown when closing other buffers
+		vim.bo.buflisted = false
+	end,
+})

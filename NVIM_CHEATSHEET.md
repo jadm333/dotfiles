@@ -21,7 +21,24 @@
 |-----|--------|
 | `Ctrl+n` | Toggle file tree |
 | `<leader>e` | Focus file tree |
-| `Ctrl+h/j/k/l` | Navigate between windows (also in terminal) |
+| `Ctrl+h/j/k/l` | Navigate between windows |
+
+### File Tree Operations
+
+When in the file tree (nvim-tree):
+
+| Key | Action |
+|-----|--------|
+| `a` | Create new file/directory (add `/` at end for directory) |
+| `d` | Delete file/directory |
+| `r` | Rename file/directory |
+| `x` | Cut file/directory |
+| `c` | Copy file/directory |
+| `p` | Paste file/directory |
+| `y` | Copy name to clipboard |
+| `Y` | Copy relative path to clipboard |
+| `gy` | Copy absolute path to clipboard |
+| `g?` | Show help/keybindings |
 
 ## Buffer Management
 
@@ -53,19 +70,39 @@
 |-----|--------|
 | `<leader>sr` | Open Grug-Far (search & replace) |
 
-## Terminal (Snacks)
+## Telescope (Fuzzy Finder)
 
-| Key | Mode | Action |
-|-----|------|--------|
-| `Ctrl+/` | n | Toggle floating terminal |
-| `Ctrl+h/j/k/l` | t | Navigate to other windows |
-| `q` | t | Close/hide terminal |
-| `gf` | t | Open file under cursor |
-| `Esc Esc` | t | Exit insert mode in terminal |
+| Key | Action |
+|-----|--------|
+| `<leader>ff` | Find files |
+| `<leader>fg` | Live grep (search in files) |
+| `<leader>fb` | Buffers |
+| `<leader>fh` | Help tags |
+| `<leader>fo` | Recent files |
 
 ---
 
 ## Git Operations
+
+### Lazygit (Full Git UI)
+
+| Key | Action |
+|-----|--------|
+| `<leader>gg` | Open Lazygit in floating window |
+
+**Inside Lazygit:**
+- `?` - Show help/keybindings
+- `q` - Quit/close Lazygit
+- `1-5` - Switch between panels (Status/Files/Branches/Commits/Stash)
+- `Space` - Stage/unstage files
+- `c` - Commit
+- `P` - Push
+- `p` - Pull
+- `Enter` - View details/diff
+- `a` - Stage all
+- `A` - Amend commit
+- `d` - View diff options
+- `x` - Open command menu
 
 ### Hunk Navigation
 
@@ -120,6 +157,22 @@
 | `<leader>aa` | n | Accept diff |
 | `<leader>ad` | n | Deny diff |
 
+## OpenCode (AI)
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `<leader>oc` | n | Toggle OpenCode |
+| `<leader>oa` | n/v | Ask OpenCode (with context) |
+| `<leader>oA` | n/v | Ask OpenCode (auto-submit) |
+| `<leader>os` | n/v | OpenCode actions menu |
+
+### Context Placeholders (in prompts)
+- `@this` - Selection, range, or cursor position
+- `@buffer` - Current file content
+- `@diagnostics` - LSP errors/warnings
+- `@diff` - Git changes
+- `@visible` - On-screen text
+
 ---
 
 ## Noice (Messages & Commands)
@@ -143,6 +196,20 @@
 
 ---
 
+## Completion (Blink.cmp)
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `Enter` | i | Accept completion |
+| `Tab` | i | Next completion item |
+| `Shift+Tab` | i | Previous completion item |
+| `Ctrl+k` | i | Toggle documentation window |
+| `Ctrl+Space` | i | Show completion menu |
+| `Ctrl+e` | i | Close completion menu |
+| `Ctrl+n` / `Down` | i | Next item (alternative) |
+| `Ctrl+p` / `Up` | i | Previous item (alternative) |
+| `Ctrl+f` / `Ctrl+b` | i | Scroll documentation window down / up |
+
 ## Code Generation
 
 | Key | Action |
@@ -162,7 +229,7 @@
 ### UI & Theme
 | Plugin | Purpose |
 |--------|---------|
-| Catppuccin | Color scheme |
+| Everforest | Color scheme |
 | Lualine | Status line |
 | Bufferline | Buffer tabs |
 | Nvim-tree | File explorer |
@@ -197,6 +264,7 @@
 | Plugin | Purpose |
 |--------|---------|
 | Claude Code | AI assistant integration |
+| OpenCode | Terminal AI coding agent |
 
 ---
 
@@ -218,7 +286,66 @@
 | Mouse | Enabled |
 | 24-bit colors | Enabled |
 | Folding | Disabled |
-| Theme | Catppuccin |
+| Theme | Everforest |
+
+---
+
+## Ghostty Terminal (macOS)
+
+### Window Management
+
+| Key | Action |
+|-----|--------|
+| `Cmd+n` | New window |
+| `Cmd+Shift+w` | Close window |
+| `Cmd+Shift+Opt+w` | Close all windows |
+| `Cmd+Enter` | Toggle fullscreen |
+| `Cmd+Ctrl+f` | Toggle fullscreen (alternative) |
+| `Cmd+q` | Quit Ghostty |
+
+### Tab Management
+
+| Key | Action |
+|-----|--------|
+| `Cmd+t` | New tab |
+| `Cmd+w` | Close tab |
+| `Cmd+Shift+[` | Previous tab |
+| `Cmd+Shift+]` | Next tab |
+| `Cmd+1-8` | Go to tab 1-8 |
+| `Cmd+9` | Go to last tab |
+
+### Split/Pane Management
+
+| Key | Action |
+|-----|--------|
+| `Cmd+d` | New split (right) |
+| `Cmd+Shift+d` | New split (down) |
+| `Cmd+[` | Focus previous split |
+| `Cmd+]` | Focus next split |
+| `Cmd+Opt+↑/↓/←/→` | Focus split directionally |
+| `Cmd+Shift+Enter` | Toggle split zoom |
+| `Cmd+Ctrl+↑/↓/←/→` | Resize splits |
+| `Cmd+Ctrl+=` | Equalize splits |
+
+### Text & Display
+
+| Key | Action |
+|-----|--------|
+| `Cmd+c` | Copy |
+| `Cmd+v` | Paste |
+| `Cmd+Home/End` | Scroll to top/bottom |
+| `Cmd+k` | Clear screen |
+| `Cmd++` | Increase font size |
+| `Cmd+-` | Decrease font size |
+| `Cmd+0` | Reset font size |
+
+### Configuration
+
+| Key | Action |
+|-----|--------|
+| `Cmd+,` | Open config |
+| `Cmd+Shift+,` | Reload config |
+| `Cmd+Opt+i` | Toggle inspector |
 
 ---
 
@@ -239,14 +366,15 @@
 
 ```
 ,e       -> File tree
+,gg      -> Lazygit (full git UI)
 ,sr      -> Search & replace
 ,xx      -> Diagnostics
 ,ac      -> Toggle Claude AI
+,oc      -> Toggle OpenCode AI
 ,gh...   -> Git hunk operations
 s/S      -> Flash jump/treesitter
 ]h/[h    -> Next/prev git hunk
 ]q/[q    -> Next/prev trouble item
 Shift+hl -> Switch buffers
 Ctrl+hjkl -> Navigate windows
-Ctrl+/    -> Toggle terminal
 ```
