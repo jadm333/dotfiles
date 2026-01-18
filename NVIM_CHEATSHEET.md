@@ -157,22 +157,6 @@ When in the file tree (nvim-tree):
 | `<leader>aa` | n | Accept diff |
 | `<leader>ad` | n | Deny diff |
 
-## OpenCode (AI)
-
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>oc` | n | Toggle OpenCode |
-| `<leader>oa` | n/v | Ask OpenCode (with context) |
-| `<leader>oA` | n/v | Ask OpenCode (auto-submit) |
-| `<leader>os` | n/v | OpenCode actions menu |
-
-### Context Placeholders (in prompts)
-- `@this` - Selection, range, or cursor position
-- `@buffer` - Current file content
-- `@diagnostics` - LSP errors/warnings
-- `@diff` - Git changes
-- `@visible` - On-screen text
-
 ---
 
 ## Noice (Messages & Commands)
@@ -264,7 +248,6 @@ When in the file tree (nvim-tree):
 | Plugin | Purpose |
 |--------|---------|
 | Claude Code | AI assistant integration |
-| OpenCode | Terminal AI coding agent |
 
 ---
 
@@ -370,7 +353,6 @@ When in the file tree (nvim-tree):
 ,sr      -> Search & replace
 ,xx      -> Diagnostics
 ,ac      -> Toggle Claude AI
-,oc      -> Toggle OpenCode AI
 ,gh...   -> Git hunk operations
 s/S      -> Flash jump/treesitter
 ]h/[h    -> Next/prev git hunk

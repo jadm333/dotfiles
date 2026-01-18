@@ -2,3 +2,6 @@
 
 LICENSE
 README.md
+Brewfile
+NVIM_CHEATSHEET.md
+run_onchange_brew-bundle.fish.tmpl

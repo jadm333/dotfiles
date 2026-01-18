@@ -22,8 +22,24 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Auto-reload files when changed externally (e.g., by Claude or git)
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+	callback = function()
+		if vim.fn.mode() ~= "c" then
+			vim.cmd("checktime")
+		end
+	end,
+})
+
+-- Notify when file changes
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+	callback = function()
+		vim.notify("File changed on disk. Buffer reloaded.", vim.log.levels.WARN)
+	end,
+})
+
 -- Prevent terminal buffers in floating windows from appearing in main editor
--- This fixes the "mirrored terminal" issue with OpenCode/Claude when closing all buffers
+-- This fixes the "mirrored terminal" issue with Claude when closing all buffers
 vim.api.nvim_create_autocmd("TermOpen", {
 	callback = function()
 		-- Make terminal buffers unlisted so they won't be shown when closing other buffers

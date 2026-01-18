@@ -9,6 +9,7 @@ return {
 		opts = {
 			highlight = { enable = true },
 			indent = { enable = true },
+			injections = { enable = true },
 			ensure_installed = {
 				"bash",
 				"c",
@@ -42,6 +43,16 @@ return {
 		},
 		config = function(_, opts)
 			require("nvim-treesitter").setup(opts)
+
+			-- Enable treesitter highlighting with injection support
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function(args)
+					local ok, parser = pcall(vim.treesitter.get_parser, args.buf)
+					if ok and parser then
+						vim.treesitter.start(args.buf, parser:lang())
+					end
+				end,
+			})
 
 			-- Check for missing parsers and notify
 			vim.api.nvim_create_autocmd("FileType", {

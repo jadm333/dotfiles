@@ -266,16 +266,12 @@ return {
 			right_mouse_command = function(n) Snacks.bufdelete(n) end,
 			diagnostics = "nvim_lsp",
 			always_show_bufferline = false,
-			-- Filter out terminal buffers (like opencode, lazygit, etc.)
+			-- Filter out terminal buffers (like  lazygit, etc.)
 			custom_filter = function(buf_number)
 				local buftype = vim.bo[buf_number].buftype
 				local filetype = vim.bo[buf_number].filetype
 				-- Exclude terminal buffers
 				if buftype == "terminal" then
-					return false
-				end
-				-- Exclude specific filetypes
-				if filetype == "snacks_terminal" or filetype == "opencode" then
 					return false
 				end
 				return true
@@ -463,5 +459,26 @@ return {
 			},
 			},
 		},
-	}
+	},
+	-- Scrollbar with mouse support
+	{
+		"dstein64/nvim-scrollview",
+		event = "BufReadPost",
+		opts = {
+			excluded_filetypes = { "NvimTree", "neo-tree", "dashboard", "alpha" },
+			current_only = false,
+			base = "right",
+			column = 1,
+			signs_on_startup = { "all" },
+			diagnostics_severities = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN },
+			scrollview_mode = "virtual",
+			always_show = true,
+			winblend = 0,
+		},
+		config = function(_, opts)
+			require("scrollview").setup(opts)
+			-- Make scrollbar brighter and more visible
+			vim.api.nvim_set_hl(0, "ScrollView", { bg = "#aaaaaa" })
+		end,
+	},
 }

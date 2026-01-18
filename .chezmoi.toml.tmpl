@@ -1,5 +1,8 @@
 [edit]
     command = "nvim"
 
+[secret]
+    command = "pass-cli"
+
 [data]
-rpi_ip = "192.168.50.71"
+    rpi_ip = "{{- secret "item" "view" "pass://dotfiles/var.rpl_ip/note" -}}"

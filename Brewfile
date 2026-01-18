@@ -8,14 +8,14 @@ brew "ripgrep"       # Search tool like grep and The Silver Searcher
 brew "protonpass/tap/pass-cli"
 # Editors
 brew "neovim"        # Ambitious Vim-fork focused on extensibility and agility
+brew "git-delta"
+brew "direnv"
 
 # Development
 # brew "node"          # Open-source, cross-platform JavaScript runtime environment
 brew "uv"            # Extremely fast Python package installer and resolver, written in Rust
 
-# AI Tools
-brew "opencode"      # AI coding agent, built for the terminal
-
+cask "claude-code"
 # Casks (GUI Applications)
 cask "font-jetbrains-mono-nerd-font"  # Nerd Font patched JetBrains Mono
 cask "ghostty"                        # Terminal emulator that uses platform-native UI and GPU acceleration

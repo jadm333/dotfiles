@@ -28,7 +28,6 @@ return {
                 preset = "default",
                 ["<Tab>"] = { "select_next", "fallback" },
                 ["<S-Tab>"] = { "select_prev", "fallback" },
-                ["<CR>"] = { "accept", "fallback" },
                 ["<C-k>"] = { "show_documentation", "hide_documentation" },
             },
             appearance = {

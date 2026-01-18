@@ -1,4 +1,24 @@
 return {
+    -- session management (auto-save/restore per directory)
+    {
+        "folke/persistence.nvim",
+        lazy = false,
+        opts = {},
+        config = function(_, opts)
+            local persistence = require("persistence")
+            persistence.setup(opts)
+            -- Auto-restore session if started with directory or no args
+            local argc = vim.fn.argc()
+            if argc == 0 then
+                persistence.load()
+            elseif argc == 1 then
+                local arg = vim.fn.argv(0)
+                if vim.fn.isdirectory(arg) == 1 then
+                    persistence.load()
+                end
+            end
+        end,
+    },
     -- search/replace in multiple files
     {
         "MagicDuck/grug-far.nvim",
