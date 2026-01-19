@@ -1,24 +1,133 @@
 return {
-    -- Side bar tree
+    -- Side bar tree (neo-tree)
 	{
-		"nvim-tree/nvim-tree.lua",
-		version = "*",
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
 		lazy = false,
 		dependencies = {
+			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
+			"MunifTanjim/nui.nvim",
 		},
-		config = function()
-			require("nvim-tree").setup({
-				filters = {
-					dotfiles = false,
-					git_ignored = false,
+		opts = {
+			close_if_last_window = true,
+			event_handlers = {
+				{
+					event = "neo_tree_buffer_enter",
+					handler = function()
+						vim.opt.guicursor = "a:Cursor/lCursor"
+						vim.cmd("hi Cursor blend=100")
+					end,
 				},
-				view = {
-					width = 30,
-				}
-			})
-		end,
+				{
+					event = "neo_tree_buffer_leave",
+					handler = function()
+						vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
+						vim.cmd("hi Cursor blend=0")
+					end,
+				},
+			},
+			filesystem = {
+				filtered_items = {
+					visible = true,
+					hide_dotfiles = false,
+					hide_gitignored = false,
+				},
+				follow_current_file = {
+					enabled = true,
+				},
+				use_libuv_file_watcher = true,
+			},
+			window = {
+				width = 36,
+				mappings = {
+					["<space>"] = "toggle_node",
+					["Z"] = function(state)
+						-- Toggle between expand all and collapse all
+						local expanded = state.expanded or false
+						if expanded then
+							require("neo-tree.sources.filesystem.commands").close_all_nodes(state)
+							state.expanded = false
+						else
+							require("neo-tree.sources.filesystem.commands").expand_all_nodes(state)
+							state.expanded = true
+						end
+					end,
+					["w"] = function()
+						-- Toggle between 15% and 40% of screen width
+						local current_width = vim.api.nvim_win_get_width(0)
+						local screen_width = vim.o.columns
+						local small = math.floor(screen_width * 0.15)
+						local large = math.floor(screen_width * 0.60)
+						if current_width < (small + large) / 2 then
+							vim.cmd("vertical resize " .. large)
+						else
+							vim.cmd("vertical resize " .. small)
+						end
+					end,
+				},
+			},
+			default_component_configs = {
+				container = {
+					enable_character_fade = true,
+					right_padding = 1,
+				},
+				file_size = {
+					enabled = true,
+					required_width = 60,
+				},
+				type = {
+					enabled = true,
+					required_width = 70,
+				},
+				last_modified = {
+					enabled = true,
+					required_width = 100,
+				},
+				git_status = {
+					symbols = {
+						added = "",
+						modified = "",
+						deleted = "",
+						renamed = "",
+						untracked = "",
+						ignored = "",
+						unstaged = "",
+						staged = "",
+						conflict = "",
+					},
+				},
+			},
+			source_selector = {
+				winbar = true,
+				sources = {
+					{ source = "filesystem", display_name = " Files" },
+					{ source = "buffers", display_name = " Buffers" },
+					{ source = "git_status", display_name = " Git" },
+				},
+			},
+		},
 	},
+	-- Old nvim-tree (commented out for rollback)
+	-- {
+	-- 	"nvim-tree/nvim-tree.lua",
+	-- 	version = "*",
+	-- 	lazy = false,
+	-- 	dependencies = {
+	-- 		"nvim-tree/nvim-web-devicons",
+	-- 	},
+	-- 	config = function()
+	-- 		require("nvim-tree").setup({
+	-- 			filters = {
+	-- 				dotfiles = false,
+	-- 				git_ignored = false,
+	-- 			},
+	-- 			view = {
+	-- 				width = 30,
+	-- 			}
+	-- 		})
+	-- 	end,
+	-- },
     -- which key pop up
 	{
 		"folke/which-key.nvim",

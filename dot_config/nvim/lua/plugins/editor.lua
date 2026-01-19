@@ -1,22 +1,30 @@
 return {
     -- session management (auto-save/restore per directory)
     {
-        "folke/persistence.nvim",
+        "rmagatti/auto-session",
         lazy = false,
-        opts = {},
-        config = function(_, opts)
-            local persistence = require("persistence")
-            persistence.setup(opts)
-            -- Auto-restore session if started with directory or no args
-            local argc = vim.fn.argc()
-            if argc == 0 then
-                persistence.load()
-            elseif argc == 1 then
-                local arg = vim.fn.argv(0)
-                if vim.fn.isdirectory(arg) == 1 then
-                    persistence.load()
-                end
-            end
+        opts = {
+            suppressed_dirs = { "~/", "~/Downloads", "/" },
+            bypass_save_filetypes = { "NvimTree", "neo-tree", "terminal" },
+            pre_save_cmds = {
+                -- Close all terminal buffers before saving
+                function()
+                    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                        if vim.bo[buf].buftype == "terminal" then
+                            vim.api.nvim_buf_delete(buf, { force = true })
+                        end
+                    end
+                end,
+            },
+        },
+        init = function()
+            -- Kill standalone Claude CLI processes when leaving nvim
+            -- Pattern matches only "claude" or "claude --resume", not Desktop app or VSCode extension
+            vim.api.nvim_create_autocmd("VimLeavePre", {
+                callback = function()
+                    vim.fn.jobstart([[pkill -f '^claude( --resume)?$']], { detach = true })
+                end,
+            })
         end,
     },
     -- search/replace in multiple files

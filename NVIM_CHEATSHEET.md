@@ -25,7 +25,7 @@
 
 ### File Tree Operations
 
-When in the file tree (nvim-tree):
+When in the file tree (neo-tree):
 
 | Key | Action |
 |-----|--------|
@@ -37,8 +37,16 @@ When in the file tree (nvim-tree):
 | `p` | Paste file/directory |
 | `y` | Copy name to clipboard |
 | `Y` | Copy relative path to clipboard |
-| `gy` | Copy absolute path to clipboard |
-| `g?` | Show help/keybindings |
+| `<` / `>` | Navigate between sources (Files/Buffers/Git) |
+| `?` | Show help/keybindings |
+
+### Neo-tree Source Panels
+
+| Key | Action |
+|-----|--------|
+| `<leader>e` | Focus file tree |
+| `<leader>eb` | Open buffers panel |
+| `<leader>eg` | Open git status panel |
 
 ## Buffer Management
 
@@ -216,7 +224,7 @@ When in the file tree (nvim-tree):
 | Everforest | Color scheme |
 | Lualine | Status line |
 | Bufferline | Buffer tabs |
-| Nvim-tree | File explorer |
+| Neo-tree | File explorer (with git status & buffers) |
 | Noice | Enhanced UI for messages/cmdline |
 | Which-key | Keybinding hints |
 | Mini.icons | File icons |
@@ -236,6 +244,7 @@ When in the file tree (nvim-tree):
 | Precognition | Movement hints |
 | Neogen | Docstring generation |
 | Puppeteer | Python f-string helper |
+| Persistence | Session auto-save/restore |
 
 ### LSP & Development
 | Plugin | Purpose |
@@ -258,6 +267,19 @@ When in the file tree (nvim-tree):
 - **Ruff LSP**: Linting and formatting
 - **Ty LSP**: Fast type checking
 - **Puppeteer**: Auto f-string conversion when typing `{}`
+
+---
+
+## Session Management
+
+Sessions auto-save on quit and auto-restore when opening nvim in the same directory.
+
+| Command | Action |
+|---------|--------|
+| `:SessionDelete` | Delete current directory's session |
+| `:Autosession search` | Browse/delete saved sessions |
+| `rm -rf ~/.local/share/nvim/sessions/*` | Clear all saved sessions (shell) |
+| `pkill -f '^claude( --resume)?$'` | Kill orphaned Claude CLI processes |
 
 ---
 
