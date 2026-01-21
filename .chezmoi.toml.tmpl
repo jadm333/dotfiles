@@ -5,4 +5,4 @@
     command = "pass-cli"
 
 [data]
-    rpi_ip = "{{- secret "item" "view" "pass://dotfiles/var.rpl_ip/note" -}}"
+    rpi_ip = "{{- output "pass-cli" "item" "view" "pass://dotfiles/var.rpl_ip/note" | trim -}}"
