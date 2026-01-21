@@ -87,6 +87,7 @@ When in the file tree (neo-tree):
 | `<leader>fb` | Buffers |
 | `<leader>fh` | Help tags |
 | `<leader>fo` | Recent files |
+| `<leader>fc` | Cheatsheet (this file) |
 
 ---
 
@@ -370,6 +371,7 @@ Sessions auto-save on quit and auto-restore when opening nvim in the same direct
 ## Quick Reference
 
 ```
+,fc      -> Cheatsheet (this file)
 ,e       -> File tree
 ,gg      -> Lazygit (full git UI)
 ,sr      -> Search & replace

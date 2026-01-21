@@ -10,6 +10,8 @@ brew "protonpass/tap/pass-cli"
 brew "neovim"        # Ambitious Vim-fork focused on extensibility and agility
 brew "git-delta"
 brew "direnv"
+brew "tree-sitter"
+brew "tree-sitter-cli"
 
 # Development
 # brew "node"          # Open-source, cross-platform JavaScript runtime environment

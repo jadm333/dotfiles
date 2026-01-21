@@ -1,24 +1,11 @@
 return {
     {
         "mason-org/mason.nvim",
-        opts = {
-            ensure_installed = {
-                "ruff",
-                "ty",
-            },
-        },
-    },
-    {
-        "mason-org/mason-lspconfig.nvim",
-        dependencies = {
-            "mason-org/mason.nvim",
-        },
-        opts = {
-            ensure_installed = {
-                "ruff",
-                "ty",
-            },
-        },
+        lazy = false,
+        priority = 100,
+        config = function()
+            require("mason").setup()
+        end,
     },
     {
         "saghen/blink.cmp",

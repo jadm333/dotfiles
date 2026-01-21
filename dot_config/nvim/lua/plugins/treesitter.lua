@@ -2,10 +2,32 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		branch = "main",
-		version = false, -- last release is way too old and doesn't work on Windows
+		version = false,
 		build = ":TSUpdate",
 		event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
 		cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
+		init = function()
+			-- Custom highlight for jinja blocks
+			local function set_jinja_hl()
+				vim.api.nvim_set_hl(0, "JinjaBlock", { bg = "#53002f" })
+				vim.api.nvim_set_hl(0, "@markup.raw.block.jinja", { link = "JinjaBlock" })
+				-- Bold delimiters: {{ }} {% %}
+				vim.api.nvim_set_hl(0, "@keyword.directive", { fg = "#00ff55", bold = true, italic=true })
+			end
+			set_jinja_hl()
+			vim.api.nvim_create_autocmd("ColorScheme", { callback = set_jinja_hl })
+
+			-- dbt SQL files use jinja filetype for proper syntax highlighting
+			vim.filetype.add({
+				pattern = {
+					[".*/models/.*%.sql"] = "jinja",
+					[".*/macros/.*%.sql"] = "jinja",
+					[".*/tests/.*%.sql"] = "jinja",
+					[".*/snapshots/.*%.sql"] = "jinja",
+					[".*/analyses/.*%.sql"] = "jinja",
+				},
+			})
+		end,
 		opts = {
 			highlight = { enable = true },
 			indent = { enable = true },
@@ -18,6 +40,7 @@ return {
 				"fish",
 				"html",
 				"javascript",
+				"jinja",
 				"jsdoc",
 				"json",
 				"jsonc",
@@ -26,12 +49,12 @@ return {
 				"luap",
 				"markdown",
 				"markdown_inline",
-				"ninja",
 				"printf",
 				"python",
 				"query",
 				"regex",
 				"rst",
+				"sql",
 				"toml",
 				"tsx",
 				"typescript",
@@ -42,6 +65,13 @@ return {
 			},
 		},
 		config = function(_, opts)
+			-- Main branch stores queries in runtime/ subdirectory
+			-- Lazy.nvim only adds plugin root to runtimepath, so add runtime manually
+			local ts_runtime = vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/runtime"
+			if vim.fn.isdirectory(ts_runtime) == 1 then
+				vim.opt.runtimepath:append(ts_runtime)
+			end
+
 			require("nvim-treesitter").setup(opts)
 
 			-- Enable treesitter highlighting with injection support

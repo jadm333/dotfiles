@@ -16,3 +16,12 @@ vim.wo.foldenable = false
 
 -- Clear search highlight with Escape
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Diagnostic display
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+})

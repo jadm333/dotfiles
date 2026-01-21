@@ -1,0 +1,1 @@
+Source: https://github.com/wcygan/dotfiles/tree/134583a3d612d6ebe5c219fd8a97aabc6cacc9b9/.claude/skills/nvim-config
