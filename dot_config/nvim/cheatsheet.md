@@ -32,12 +32,16 @@ When in the file tree (neo-tree):
 | `a` | Create new file/directory (add `/` at end for directory) |
 | `d` | Delete file/directory |
 | `r` | Rename file/directory |
+| `m` | Move file/directory (prompts for destination) |
 | `x` | Cut file/directory |
 | `c` | Copy file/directory |
-| `p` | Paste file/directory |
+| `p` | Paste (after cut/copy) |
 | `y` | Copy name to clipboard |
 | `Y` | Copy relative path to clipboard |
+| `gy` | Copy absolute path to clipboard |
 | `<` / `>` | Navigate between sources (Files/Buffers/Git) |
+| `H` | Toggle hidden files |
+| `R` | Refresh tree |
 | `?` | Show help/keybindings |
 
 ### Neo-tree Source Panels
@@ -60,17 +64,6 @@ When in the file tree (neo-tree):
 | `<leader>bP` | Delete non-pinned buffers |
 | `<leader>br` | Delete buffers to the right |
 | `<leader>bl` | Delete buffers to the left |
-
-## Search & Navigation (Flash)
-
-| Key | Mode | Action |
-|-----|------|--------|
-| `s` | n/v/o | Flash jump |
-| `S` | n/v/o | Flash Treesitter (structural) |
-| `r` | o | Remote Flash |
-| `R` | o/v | Treesitter search |
-| `Ctrl+s` | c | Toggle Flash in search |
-| `Ctrl+Space` | n | Treesitter incremental selection |
 
 ## Search & Replace
 
@@ -234,7 +227,6 @@ When in the file tree (neo-tree):
 ### Editor
 | Plugin | Purpose |
 |--------|---------|
-| Flash | Enhanced navigation/search |
 | Grug-far | Search & replace |
 | Gitsigns | Git integration |
 | Trouble | Diagnostics panel |
@@ -378,7 +370,6 @@ Sessions auto-save on quit and auto-restore when opening nvim in the same direct
 ,xx      -> Diagnostics
 ,ac      -> Toggle Claude AI
 ,gh...   -> Git hunk operations
-s/S      -> Flash jump/treesitter
 ]h/[h    -> Next/prev git hunk
 ]q/[q    -> Next/prev trouble item
 Shift+hl -> Switch buffers

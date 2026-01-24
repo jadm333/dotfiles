@@ -1,8 +1,8 @@
 # Super is cmd in macos
 font-family = "JetBrainsMono Nerd Font"
 font-size = 14
-theme = Dracula
-background-opacity = 0.90
+theme = dark:Monokai Remastered,light:Catppuccin Latte
+background-opacity = 0.80
 # Allow cursor shape changes (for Neovim modes)
 shell-integration-features = cursor,sudo
 # Quick terminal

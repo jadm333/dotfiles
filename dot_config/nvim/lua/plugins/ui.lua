@@ -12,22 +12,22 @@ return {
 		config = function()
 			require("neo-tree").setup({
 				close_if_last_window = true,
-				event_handlers = {
-					{
-						event = "neo_tree_buffer_enter",
-						handler = function()
-							vim.opt.guicursor = "a:Cursor/lCursor"
-							vim.cmd("hi Cursor blend=100")
-						end,
-					},
-					{
-						event = "neo_tree_buffer_leave",
-						handler = function()
-							vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
-							vim.cmd("hi Cursor blend=0")
-						end,
-					},
-				},
+				-- event_handlers = {
+				-- 	{
+				-- 		event = "neo_tree_buffer_enter",
+				-- 		handler = function()
+				-- 			vim.opt.guicursor = "a:Cursor/lCursor"
+				-- 			vim.cmd("hi Cursor blend=100")
+				-- 		end,
+				-- 	},
+				-- 	{
+				-- 		event = "neo_tree_buffer_leave",
+				-- 		handler = function()
+				-- 			vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
+				-- 			vim.cmd("hi Cursor blend=0")
+				-- 		end,
+				-- 	},
+				-- },
 				filesystem = {
 					filtered_items = {
 						visible = true,
