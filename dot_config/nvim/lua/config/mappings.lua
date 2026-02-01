@@ -20,3 +20,7 @@ map("n", "<leader>gg", function() require("snacks").lazygit() end, { desc = "Laz
 
 -- Lazy plugin manager
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy plugin manager" })
+
+-- Delete/change without yanking (preserves clipboard)
+map("x", "d", '"_d', { desc = "Delete without yanking" })
+map("x", "c", '"_c', { desc = "Change without yanking" })

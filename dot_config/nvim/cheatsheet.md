@@ -202,6 +202,14 @@ When in the file tree (neo-tree):
 |-----|--------|
 | `<leader>a` | Add docstring (Neogen) |
 
+## Commenting
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `gcc` | n | Toggle comment on current line |
+| `gc` | v | Toggle comment on selection |
+| `gc` + motion | n | Toggle comment with motion (e.g., `gcap` for paragraph) |
+
 ## Which-Key
 
 | Key | Action |
