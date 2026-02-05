@@ -65,6 +65,15 @@ When in the file tree (neo-tree):
 | `<leader>br` | Delete buffers to the right |
 | `<leader>bl` | Delete buffers to the left |
 
+## Editing
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `J` | v | Move selection down |
+| `K` | v | Move selection up |
+| `d` | v | Delete without yanking |
+| `c` | v | Change without yanking |
+
 ## Search & Replace
 
 | Key | Action |
@@ -382,4 +391,5 @@ Sessions auto-save on quit and auto-restore when opening nvim in the same direct
 ]q/[q    -> Next/prev trouble item
 Shift+hl -> Switch buffers
 Ctrl+hjkl -> Navigate windows
+J/K (visual) -> Move lines up/down
 ```

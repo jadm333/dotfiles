@@ -24,3 +24,7 @@ map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy plugin manager" })
 -- Delete/change without yanking (preserves clipboard)
 map("x", "d", '"_d', { desc = "Delete without yanking" })
 map("x", "c", '"_c', { desc = "Change without yanking" })
+
+-- Move selected lines up/down in visual mode
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
