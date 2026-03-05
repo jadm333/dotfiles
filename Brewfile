@@ -6,6 +6,8 @@ brew "fish"          # User-friendly command-line shell for UNIX-like operating 
 brew "lazygit"       # Simple terminal UI for git commands
 brew "ripgrep"       # Search tool like grep and The Silver Searcher
 brew "protonpass/tap/pass-cli"
+brew "podman"
+brew "podman-compose"
 # Editors
 brew "neovim"        # Ambitious Vim-fork focused on extensibility and agility
 brew "git-delta"
@@ -23,4 +25,4 @@ cask "font-jetbrains-mono-nerd-font"  # Nerd Font patched JetBrains Mono
 cask "ghostty"                        # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "proton-pass"
 cask "claude-code"
-cask "gitbutler"
+cask "podman-desktop"

@@ -74,6 +74,25 @@ When in the file tree (neo-tree):
 | `d` | v | Delete without yanking |
 | `c` | v | Change without yanking |
 
+## Multicursor
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `Alt+Up` / `Alt+Down` | n/v | Add cursor above / below |
+| `<leader>Up` / `<leader>Down` | n/v | Skip cursor above / below |
+| `<leader>mn` / `<leader>mN` | n/v | Match word/selection forward / backward |
+| `<leader>ms` / `<leader>mS` | n/v | Skip match forward / backward |
+| `Ctrl+LeftClick` | n | Add/remove cursor with mouse |
+| `Ctrl+q` | n/v | Toggle cursor under main cursor |
+
+**When multiple cursors are active:**
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `Left` / `Right` | n/v | Cycle through cursors |
+| `<leader>mx` | n/v | Delete current cursor |
+| `Esc` | n | Clear all cursors (or re-enable if disabled) |
+
 ## Search & Replace
 
 | Key | Action |
@@ -244,6 +263,7 @@ When in the file tree (neo-tree):
 ### Editor
 | Plugin | Purpose |
 |--------|---------|
+| Multicursor | Multiple cursors |
 | Grug-far | Search & replace |
 | Gitsigns | Git integration |
 | Trouble | Diagnostics panel |
