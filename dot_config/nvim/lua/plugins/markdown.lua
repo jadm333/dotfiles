@@ -8,6 +8,13 @@ return {
 				style = "full",
 				-- highlight_inline = "language",
 			},
+			completions = {
+				blink = { enabled = true },
+			},
+			pipe_table = {
+				preset = "heavy",
+				cell = 'trimmed',
+			}
 		},
 	},
 }

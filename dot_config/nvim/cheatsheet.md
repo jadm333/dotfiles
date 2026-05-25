@@ -23,6 +23,23 @@
 | `<leader>e` | Focus file tree |
 | `Ctrl+h/j/k/l` | Navigate between windows |
 
+### Splits (Neovim)
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+w s` | Horizontal split |
+| `Ctrl+w v` | Vertical split |
+| `Ctrl+w q` | Close current split |
+| `Ctrl+w o` | Close all other splits |
+| `Ctrl+w =` | Equalize split sizes |
+| `Ctrl+w _` | Maximize height |
+| `Ctrl+w \|` | Maximize width |
+| `Ctrl+w r` | Rotate splits |
+| `Ctrl+w x` | Swap with next split |
+| `Ctrl+w T` | Move split to new tab |
+| `Ctrl+w +/-` | Increase/decrease height |
+| `Ctrl+w >/<` | Increase/decrease width |
+
 ### File Tree Operations
 
 When in the file tree (neo-tree):
@@ -64,6 +81,22 @@ When in the file tree (neo-tree):
 | `<leader>bP` | Delete non-pinned buffers |
 | `<leader>br` | Delete buffers to the right |
 | `<leader>bl` | Delete buffers to the left |
+
+## Scrolling (Neoscroll)
+
+Smooth animated scrolling for the default scroll commands.
+
+| Key | Action |
+|-----|--------|
+| `Ctrl+u` | Scroll up half window |
+| `Ctrl+d` | Scroll down half window |
+| `Ctrl+b` | Scroll up full window |
+| `Ctrl+f` | Scroll down full window |
+| `Ctrl+y` | Scroll up one line |
+| `Ctrl+e` | Scroll down one line |
+| `zt` | Cursor to top of window |
+| `zz` | Cursor to middle of window |
+| `zb` | Cursor to bottom of window |
 
 ## Editing
 
@@ -187,6 +220,18 @@ When in the file tree (neo-tree):
 | `<leader>aa` | n | Accept diff |
 | `<leader>ad` | n | Deny diff |
 
+## Codex (OpenAI)
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `<leader>oc` | n | Toggle Codex |
+| `<leader>or` | n | Resume Codex |
+| `<leader>oC` | n | Continue Codex |
+| `<leader>ob` | n | Add current buffer |
+| `<leader>os` | v | Send selection to Codex |
+| `<leader>oa` | n | Accept diff |
+| `<leader>od` | n | Deny diff |
+
 ---
 
 ## Noice (Messages & Commands)
@@ -259,6 +304,7 @@ When in the file tree (neo-tree):
 | Which-key | Keybinding hints |
 | Mini.icons | File icons |
 | Snacks | Utilities (indent, notifications, terminal) |
+| Neoscroll | Smooth scrolling animations |
 
 ### Editor
 | Plugin | Purpose |
@@ -287,6 +333,7 @@ When in the file tree (neo-tree):
 | Plugin | Purpose |
 |--------|---------|
 | Claude Code | AI assistant integration |
+| Codex | OpenAI Codex CLI integration |
 
 ---
 

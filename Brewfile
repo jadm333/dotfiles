@@ -24,5 +24,5 @@ brew "uv"            # Extremely fast Python package installer and resolver, wri
 cask "font-jetbrains-mono-nerd-font"  # Nerd Font patched JetBrains Mono
 cask "ghostty"                        # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "proton-pass"
-cask "claude-code"
+cask "claude-code@latest"
 cask "podman-desktop"

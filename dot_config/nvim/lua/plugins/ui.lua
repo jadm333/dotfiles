@@ -540,11 +540,11 @@ return {
 				notifier = { enabled = true },
 				picker = { enabled = true },
 				scope = { enabled = true },
-				scroll = { enabled = true },
+				-- scroll = { enabled = true },
 				statuscolumn = { enabled = false }, -- we set this in options.lua
 				bigfile = { enabled = true, size = 10 * 1024 * 1024 },
 				quickfile = { enabled = true },
-				cursor = { enable = false },
+				-- cursor = { enable = false },
 				terminal = { enabled = false },
 				lazygit = {
 					enabled = true,
@@ -588,25 +588,15 @@ return {
 			},
 		},
 	},
-	-- Scrollbar with mouse support
+	-- nvim-scrollview removed: caused redraw flicker that looked like neo-tree
+	-- closing/reopening on every cursor movement
+	-- Smooth scrolling
 	{
-		"dstein64/nvim-scrollview",
-		event = "BufReadPost",
+		"karb94/neoscroll.nvim",
+		event = "VeryLazy",
 		opts = {
-			excluded_filetypes = { "NvimTree", "neo-tree", "dashboard", "alpha" },
-			current_only = false,
-			base = "right",
-			column = 1,
-			signs_on_startup = { "all" },
-			diagnostics_severities = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN },
-			scrollview_mode = "virtual",
-			always_show = true,
-			winblend = 0,
+			respect_scrolloff = true,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+  			cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
 		},
-		config = function(_, opts)
-			require("scrollview").setup(opts)
-			-- Make scrollbar brighter and more visible
-			vim.api.nvim_set_hl(0, "ScrollView", { bg = "#aaaaaa" })
-		end,
 	},
 }
