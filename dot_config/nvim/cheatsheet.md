@@ -220,17 +220,30 @@ Smooth animated scrolling for the default scroll commands.
 | `<leader>aa` | n | Accept diff |
 | `<leader>ad` | n | Deny diff |
 
-## Codex (OpenAI)
+---
+
+## CSV View
+
+Aligned, table-style display of CSV/TSV files. Enabled automatically when a `.csv`/`.tsv` file opens; toggle manually on any delimited file.
 
 | Key | Mode | Action |
 |-----|------|--------|
-| `<leader>oc` | n | Toggle Codex |
-| `<leader>or` | n | Resume Codex |
-| `<leader>oC` | n | Continue Codex |
-| `<leader>ob` | n | Add current buffer |
-| `<leader>os` | v | Send selection to Codex |
-| `<leader>oa` | n | Accept diff |
-| `<leader>od` | n | Deny diff |
+| `<leader>cv` | n | Toggle CSV view |
+
+**When CSV view is active:**
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `<Tab>` / `<S-Tab>` | n/v | Jump to next / previous field |
+| `<Enter>` / `<S-Enter>` | n/v | Jump to next / previous row |
+| `if` / `af` | o/x | Select inner / outer field (text object) |
+
+| Command | Action |
+|---------|--------|
+| `:CsvViewEnable` | Enable CSV view |
+| `:CsvViewDisable` | Disable CSV view |
+| `:CsvViewToggle` | Toggle CSV view |
+| `:CsvViewInfo` | Show parser/view info |
 
 ---
 
@@ -321,6 +334,7 @@ Smooth animated scrolling for the default scroll commands.
 | Neogen | Docstring generation |
 | Puppeteer | Python f-string helper |
 | Persistence | Session auto-save/restore |
+| CSVview | Aligned CSV/TSV table display |
 
 ### LSP & Development
 | Plugin | Purpose |
@@ -333,7 +347,6 @@ Smooth animated scrolling for the default scroll commands.
 | Plugin | Purpose |
 |--------|---------|
 | Claude Code | AI assistant integration |
-| Codex | OpenAI Codex CLI integration |
 
 ---
 
