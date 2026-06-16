@@ -15,6 +15,7 @@ brew "direnv"
 brew "tree-sitter"
 brew "tree-sitter-cli"
 brew "imagemagick"
+brew "tmux"
 
 # Development
 # brew "node"          # Open-source, cross-platform JavaScript runtime environment

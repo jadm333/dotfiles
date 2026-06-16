@@ -43,6 +43,9 @@ return {
 				window = {
 					width = 36,
 					mappings = {
+						-- Stop the mouse from starting visual mode on a click-drag
+						["<LeftDrag>"] = "noop",
+						["<LeftRelease>"] = "noop",
 						["<space>"] = "toggle_node",
 						["y"] = function(state)
 							local node = state.tree:get_node()
@@ -51,6 +54,12 @@ return {
 							vim.notify("Copied: " .. name)
 						end,
 						["Y"] = function(state)
+							local node = state.tree:get_node()
+							local path = vim.fn.fnamemodify(node:get_id(), ":.")
+							vim.fn.setreg("+", path)
+							vim.notify("Copied: " .. path)
+						end,
+						["gy"] = function(state)
 							local node = state.tree:get_node()
 							local path = node:get_id()
 							vim.fn.setreg("+", path)
@@ -156,11 +165,11 @@ return {
 		init = function()
 			vim.g.lualine_laststatus = vim.o.laststatus
 			if vim.fn.argc(-1) > 0 then
-			-- set an empty statusline till lualine loads
-			vim.o.statusline = " "
+				-- set an empty statusline till lualine loads
+				vim.o.statusline = " "
 			else
-			-- hide the statusline on the starter page
-			vim.o.laststatus = 0
+				-- hide the statusline on the starter page
+				vim.o.laststatus = 0
 			end
 		end,
 		opts = function()
@@ -170,15 +179,15 @@ return {
 
 			local icons = {
 				diagnostics = {
-					Error = " ",
-					Warn = " ",
-					Info = " ",
-					Hint = " ",
+					Error = " ",
+					Warn = " ",
+					Info = " ",
+					Hint = " ",
 				},
 				git = {
-					added = " ",
-					modified = " ",
-					removed = " ",
+					added = " ",
+					modified = " ",
+					removed = " ",
 				},
 			}
 
@@ -186,7 +195,7 @@ return {
 
 			local opts = {
 			options = {
-				theme = "auto",
+				theme = "powerline_dark",
 				globalstatus = vim.o.laststatus == 3,
 				disabled_filetypes = { statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
 			},
@@ -195,71 +204,67 @@ return {
 				lualine_b = { "branch" },
 
 				lualine_c = {
-				{
-					"diagnostics",
-					symbols = {
-					error = icons.diagnostics.Error,
-					warn = icons.diagnostics.Warn,
-					info = icons.diagnostics.Info,
-					hint = icons.diagnostics.Hint,
+					{
+						"diagnostics",
+						symbols = {
+							error = icons.diagnostics.Error,
+							warn = icons.diagnostics.Warn,
+							info = icons.diagnostics.Info,
+							hint = icons.diagnostics.Hint,
+						},
 					},
-				},
-				{ "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-				{ "filename", path = 1 },
+					{"encoding"},
+					{ "filetype", icon_only = false, separator = "", padding = { left = 1, right = 0 } },
+					{ "filename", path = 1 },
 				},
 				lualine_x = {
-				Snacks.profiler.status(),
-				-- stylua: ignore
-				{
-					function() return require("noice").api.status.command.get() end,
-					cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-					color = function() return { fg = Snacks.util.color("Statement") } end,
-				},
-				-- stylua: ignore
-				{
-					function() return require("noice").api.status.mode.get() end,
-					cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-					color = function() return { fg = Snacks.util.color("Constant") } end,
-				},
-				-- stylua: ignore
-				{
-					function() return "  " .. require("dap").status() end,
-					cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-					color = function() return { fg = Snacks.util.color("Debug") } end,
-				},
-				-- stylua: ignore
-				{
-					require("lazy.status").updates,
-					cond = require("lazy.status").has_updates,
-					color = function() return { fg = Snacks.util.color("Special") } end,
-				},
-				{
-					"diff",
-					symbols = {
-					added = icons.git.added,
-					modified = icons.git.modified,
-					removed = icons.git.removed,
+					-- Snacks.profiler.status(),
+					-- stylua: ignore
+					{
+						function() return require("noice").api.status.command.get() end,
+						cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+						color = function() return { fg = Snacks.util.color("Statement") } end,
 					},
-					source = function()
-					local gitsigns = vim.b.gitsigns_status_dict
-					if gitsigns then
-						return {
-						added = gitsigns.added,
-						modified = gitsigns.changed,
-						removed = gitsigns.removed,
-						}
-					end
-					end,
-				},
+					-- stylua: ignore
+					{
+						function() return require("noice").api.status.mode.get() end,
+						cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+						color = function() return { fg = Snacks.util.color("Constant") } end,
+					},
+					-- stylua: ignore
+					{
+						require("lazy.status").updates,
+						cond = require("lazy.status").has_updates,
+						color = function() return { fg = Snacks.util.color("Special") } end,
+					},
+					{
+						"diff",
+						symbols = {
+							added = icons.git.added,
+							modified = icons.git.modified,
+							removed = icons.git.removed,
+						},
+						source = function()
+							local gitsigns = vim.b.gitsigns_status_dict
+							if gitsigns then
+								return {
+								added = gitsigns.added,
+								modified = gitsigns.changed,
+								removed = gitsigns.removed,
+								}
+							end
+						end,
+					},
 				},
 				lualine_y = {
-				{ "progress", separator = " ", padding = { left = 1, right = 0 } },
-				{ "location", padding = { left = 0, right = 1 } },
+					{ "progress", separator = " ", padding = { left = 1, right = 0 } },
+					{ "location", padding = { left = 0, right = 1 } },
+					{"lsp_status"}
 				},
 				lualine_z = {
-				function()
-					return " " .. os.date("%R")
-				end,
+					function()
+						return " " .. os.date("%R")
+					end,
 				},
 			},
 			extensions = { "neo-tree", "lazy", "fzf" },
@@ -375,72 +380,96 @@ return {
 		event = "VeryLazy",
 		dependencies = { "folke/snacks.nvim" },
 		keys = {
-			{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle Pin" },
-			{ "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete Non-Pinned Buffers" },
-			{ "<leader>br", "<Cmd>BufferLineCloseRight<CR>", desc = "Delete Buffers to the Right" },
-			{ "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", desc = "Delete Buffers to the Left" },
-			{ "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
-			{ "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
-			{ "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
-			{ "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
-			{ "[B", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer prev" },
-			{ "]B", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
+			{ "gb", "<Cmd>BufferLinePick<CR>", desc = "Pick Buffer" },
+			{ "gD", "<Cmd>BufferLinePickClose<CR>", desc = "Pick Buffer to Close" },
 		},
 		opts = {
 			options = {
-			-- stylua: ignore
-			close_command = function(n) Snacks.bufdelete(n) end,
-			-- stylua: ignore
-			right_mouse_command = function(n) Snacks.bufdelete(n) end,
-			diagnostics = "nvim_lsp",
-			always_show_bufferline = false,
-			-- Filter out terminal buffers (like  lazygit, etc.)
-			custom_filter = function(buf_number)
-				local buftype = vim.bo[buf_number].buftype
-				local filetype = vim.bo[buf_number].filetype
-				-- Exclude terminal buffers
-				if buftype == "terminal" then
-					return false
-				end
-				return true
-			end,
-			name_formatter = function(buf)
-				return vim.fn.fnamemodify(buf.name, ':t')
-			end,
-			diagnostics_indicator = function(_, _, diag)
-				local icons = {
-					Error = " ",
-					Warn = " ",
-				}
-				local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-				.. (diag.warning and icons.Warn .. diag.warning or "")
-				return vim.trim(ret)
-			end,
-			offsets = {
-				{
-				filetype = "NvimTree",
-				text = "File Explorer",
-				highlight = "Directory",
-				text_align = "left",
+				separator_style="padded_slant",
+				indicator="underline",
+				pick = {
+					alphabet = "abcdefghijklmopqrstuvwxyz1234567890"
 				},
-				{
-				filetype = "neo-tree",
-				text = "Neo-tree",
-				highlight = "Directory",
-				text_align = "left",
+				-- stylua: ignore
+				close_command = function(n) Snacks.bufdelete(n) end,
+				-- stylua: ignore
+				right_mouse_command = function(n) Snacks.bufdelete(n) end,
+				diagnostics = "nvim_lsp",
+				always_show_bufferline = false,
+				-- Filter out terminal buffers (like  lazygit, etc.)
+				custom_filter = function(buf_number)
+					local buftype = vim.bo[buf_number].buftype
+					local filetype = vim.bo[buf_number].filetype
+					-- Exclude terminal buffers
+					if buftype == "terminal" then
+						return false
+					end
+					return true
+				end,
+				name_formatter = function(buf)
+					return vim.fn.fnamemodify(buf.name, ':t')
+				end,
+				diagnostics_indicator = function(_, _, diag)
+					local icons = {
+						Error = " ",
+						Warn = " ",
+					}
+					local ret = (diag.error and icons.Error .. diag.error .. " " or "")
+					.. (diag.warning and icons.Warn .. diag.warning or "")
+					return vim.trim(ret)
+				end,
+				offsets = {
+					{
+						filetype = "NvimTree",
+						text = "File Explorer",
+						highlight = "Directory",
+						text_align = "left",
+					},
+					{
+						filetype = "neo-tree",
+						text = "Neo-tree",
+						highlight = "Directory",
+						text_align = "left",
+					},
 				},
-			},
-			---@param opts bufferline.IconFetcherOpts
-			get_element_icon = function(opts)
-				-- Use mini.icons if available
-				if pcall(require, "mini.icons") then
-					return require("mini.icons").get("filetype", opts.filetype)
-				end
-				return nil
-			end,
+				---@param opts bufferline.IconFetcherOpts
+				get_element_icon = function(opts)
+					-- Use mini.icons if available
+					if pcall(require, "mini.icons") then
+						return require("mini.icons").get("filetype", opts.filetype)
+					end
+					return nil
+				end,
 			},
 		},
 		config = function(_, opts)
+			local fill = "#000000" -- bar background
+			local inactive = "#1e1547" -- inactive tabs
+			local selected = "#3b4ca4" -- active tab
+
+			local highlights = {
+				fill = { bg = fill },
+				trunc_marker = { bg = fill },
+				-- slant separators are drawn with the fill color on top of the tab color
+				separator = { fg = fill, bg = inactive },
+				separator_visible = { fg = fill, bg = inactive },
+				separator_selected = { fg = fill, bg = selected },
+				indicator_visible = { bg = inactive },
+				indicator_selected = { bg = selected },
+			}
+			-- every element drawn inside a tab needs that tab's background,
+			-- otherwise it keeps the colorscheme default and shows as a patch
+			for _, name in ipairs({
+				"buffer", "close_button", "modified", "duplicate", "pick", "numbers",
+				"diagnostic", "error", "error_diagnostic", "warning", "warning_diagnostic",
+				"info", "info_diagnostic", "hint", "hint_diagnostic",
+			}) do
+				highlights[name == "buffer" and "background" or name] = { bg = inactive }
+				highlights[name .. "_visible"] = { bg = inactive }
+				highlights[name .. "_selected"] = { bg = selected }
+			end
+			opts.highlights = highlights
+
 			require("bufferline").setup(opts)
 			-- Fix bufferline when restoring a session
 			vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete" }, {

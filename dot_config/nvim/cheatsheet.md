@@ -59,6 +59,8 @@ When in the file tree (neo-tree):
 | `<` / `>` | Navigate between sources (Files/Buffers/Git) |
 | `H` | Toggle hidden files |
 | `R` | Refresh tree |
+| `/` | Fuzzy find / jump to file matching typed letters |
+| `o` | Re-order files (then `c`/`d`/`g`/`m`/`n`/`s`/`t` = created/diagnostics/git/modified/name/size/type) |
 | `?` | Show help/keybindings |
 
 ### Neo-tree Source Panels
@@ -73,14 +75,8 @@ When in the file tree (neo-tree):
 
 | Key | Action |
 |-----|--------|
-| `Shift+h` | Previous buffer |
-| `Shift+l` | Next buffer |
-| `[b` / `]b` | Previous / Next buffer |
-| `[B` / `]B` | Move buffer left / right |
-| `<leader>bp` | Pin buffer |
-| `<leader>bP` | Delete non-pinned buffers |
-| `<leader>br` | Delete buffers to the right |
-| `<leader>bl` | Delete buffers to the left |
+| `gb` | Pick buffer (jump by letter hint) |
+| `gD` | Pick buffer to close |
 
 ## Scrolling (Neoscroll)
 
@@ -469,7 +465,7 @@ Sessions auto-save on quit and auto-restore when opening nvim in the same direct
 ,gh...   -> Git hunk operations
 ]h/[h    -> Next/prev git hunk
 ]q/[q    -> Next/prev trouble item
-Shift+hl -> Switch buffers
+gb       -> Pick buffer
 Ctrl+hjkl -> Navigate windows
 J/K (visual) -> Move lines up/down
 ```

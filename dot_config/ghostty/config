@@ -14,3 +14,6 @@ keybind = global:alt+space=toggle_quick_terminal
 
 link-url = true
 clipboard-trim-trailing-spaces = true
+
+# Visible divider line between split panes
+split-divider-color = #3732c8
