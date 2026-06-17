@@ -78,6 +78,17 @@ When in the file tree (neo-tree):
 | `gb` | Pick buffer (jump by letter hint) |
 | `gD` | Pick buffer to close |
 
+## Flash (Jump Motion)
+
+Jump anywhere on screen by typing characters, then a label.
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `s` | n/x/o | Flash jump (type chars, then label to jump) |
+| `S` | n/x/o | Flash Treesitter (label syntax nodes) |
+| `r` | o | Remote Flash (operate at a remote location) |
+| `R` | o/x | Treesitter Search |
+
 ## Scrolling (Neoscroll)
 
 Smooth animated scrolling for the default scroll commands.
@@ -319,6 +330,7 @@ Aligned, table-style display of CSV/TSV files. Enabled automatically when a `.cs
 | Plugin | Purpose |
 |--------|---------|
 | Multicursor | Multiple cursors |
+| Flash | Jump motion (label-based navigation) |
 | Grug-far | Search & replace |
 | Gitsigns | Git integration |
 | Trouble | Diagnostics panel |
