@@ -3,6 +3,12 @@ return {
     {
         "coder/claudecode.nvim",
         dependencies = { "folke/snacks.nvim" },
+        -- Load eagerly (like flash) instead of lazy-loading on keys. A key-triggered
+        -- lazy load uses an `expr` mapping that replays the keys via feedkeys; in
+        -- visual mode that replay drops the selection and the trailing `s` of
+        -- <leader>as leaks through to flash.nvim's `s`. Loading here makes <leader>as
+        -- a real <cmd> mapping, which preserves the visual selection.
+        event = "VeryLazy",
         opts = {
             terminal = {
                 snacks_win_opts = {
@@ -32,7 +38,7 @@ return {
                 "<leader>as",
                 "<cmd>ClaudeCodeTreeAdd<cr>",
                 desc = "Add file",
-                ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+                ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw", "snacks_picker_list" },
             },
             -- Diff management
             { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },

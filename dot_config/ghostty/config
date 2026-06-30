@@ -3,7 +3,7 @@ font-family = "JetBrainsMono Nerd Font"
 font-size = 14
 theme = dark:Monokai Remastered,light:Catppuccin Latte
 background-opacity = 0.80
-#background-blur = true
+background-blur = true
 # Allow cursor shape changes (for Neovim modes)
 shell-integration-features = cursor,sudo
 # Quick terminal
