@@ -139,21 +139,11 @@ return {
 		event = "VeryLazy",
 		opts = {
 			preset = "modern",
-		},
-		keys = {
-			{
-				"<leader>",
-				function()
-					require("which-key").show({ global = false })
-				end,
-				desc = "Buffer Local Keymaps (which-key)",
-			},
-			{
-				"<localleader>",
-				function()
-					require("which-key").show({ global = false })
-				end,
-				desc = "Buffer Local Keymaps (which-key)",
+			-- claudecode.nvim's visual <leader>as mapping works through native
+			-- key resolution. Avoid which-key's visual ModeChanged trigger so it
+			-- cannot leave visual mode before ClaudeCodeSend runs.
+			triggers = {
+				{ "<auto>", mode = "nso" },
 			},
 		},
 	},
