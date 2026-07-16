@@ -27,4 +27,5 @@ cask "ghostty"                        # Terminal emulator that uses platform-nat
 cask "proton-pass"
 cask "claude-code@latest"
 cask "podman-desktop"
+cask "vscodium"
 # cask "betterdisplay"
