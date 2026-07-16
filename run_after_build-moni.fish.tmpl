@@ -1,0 +1,47 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env fish
+# moni source hash: {{ include "private_dot_local/private_share/moni/moni.c" | sha256sum }}
+
+set -l source "$HOME/.local/share/moni/moni.c"
+set -l bin_dir "$HOME/.local/bin"
+set -l binary "$bin_dir/monictl"
+
+if not /usr/bin/xcrun --sdk macosx --find clang >/dev/null 2>&1
+    echo "moni: Xcode Command Line Tools are required; run 'xcode-select --install'." >&2
+    exit 1
+end
+
+mkdir -p "$bin_dir"
+or exit 1
+
+set -l temporary (mktemp "$bin_dir/.monictl.XXXXXX")
+or exit 1
+
+if not /usr/bin/xcrun --sdk macosx clang \
+        -std=c17 \
+        -O2 \
+        -Wall \
+        -Wextra \
+        -Wpedantic \
+        "$source" \
+        -o "$temporary" \
+        -framework CoreFoundation \
+        -framework CoreGraphics \
+        -framework ColorSync
+    rm -f "$temporary"
+    exit 1
+end
+
+chmod 755 "$temporary"
+or begin
+    rm -f "$temporary"
+    exit 1
+end
+
+if not "$temporary" check >/dev/null
+    rm -f "$temporary"
+    exit 1
+end
+
+mv -f "$temporary" "$binary"
+{{ end -}}
