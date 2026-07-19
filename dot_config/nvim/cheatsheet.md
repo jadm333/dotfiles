@@ -21,7 +21,7 @@
 |-----|--------|
 | `Ctrl+n` | Toggle file tree |
 | `<leader>e` | Focus file tree |
-| `Ctrl+h/j/k/l` | Navigate between windows |
+| `Ctrl+h/j/k/l` | Navigate between windows (crosses into tmux panes, incl. Claude) |
 
 ### Splits (Neovim)
 
@@ -215,15 +215,23 @@ Smooth animated scrolling for the default scroll commands.
 
 ## Claude Code (AI)
 
+Claude runs in a **tmux pane**, not an in-nvim split (`terminal.provider = "none"`). nvim only hosts the WebSocket server that carries selections, file mentions, and diffs — so nvim must stay open, and must itself be running inside tmux. See the [tmux](#tmux) section.
+
+Pane lifecycle (these drive tmux):
+
 | Key | Mode | Action |
 |-----|------|--------|
-| `<leader>ac` | n | Toggle Claude |
-| `<leader>af` | n | Focus Claude |
-| `<leader>ar` | n | Resume Claude |
-| `<leader>aC` | n | Continue Claude |
-| `<leader>am` | n | Select Claude model |
+| `<leader>ac` | n | Toggle Claude pane (split below / kill) |
+| `<leader>ar` | n | Open Claude pane with `--resume` |
+| `<leader>aC` | n | Open Claude pane with `--continue` |
+
+IDE integration (pressed in nvim, travels over the socket):
+
+| Key | Mode | Action |
+|-----|------|--------|
 | `<leader>ab` | n | Add current buffer |
 | `<leader>as` | v | Send selection to Claude |
+| `<leader>as` | tree | Add file under cursor (in file tree) |
 | `<leader>aa` | n | Accept diff |
 | `<leader>ad` | n | Deny diff |
 
@@ -343,6 +351,7 @@ Aligned, table-style display of CSV/TSV files. Enabled automatically when a `.cs
 | Puppeteer | Python f-string helper |
 | Persistence | Session auto-save/restore |
 | CSVview | Aligned CSV/TSV table display |
+| Smart-splits | Seamless nvim<->tmux pane navigation |
 
 ### LSP & Development
 | Plugin | Purpose |
@@ -390,6 +399,41 @@ Sessions auto-save on quit and auto-restore when opening nvim in the same direct
 | 24-bit colors | Enabled |
 | Folding | Disabled |
 | Theme | Everforest |
+
+---
+
+## tmux
+
+nvim runs inside tmux so the Claude CLI can live in its own pane while nvim hosts the WebSocket server. Config: `~/.config/tmux/tmux.conf`.
+
+### Launching
+
+| Command | Action |
+|---------|--------|
+| `nv` | Open nvim inside tmux (attaches/creates session `main` if not already in tmux) |
+| `nv <file>` | Same, opening `<file>` |
+| `tmux` / `tmux attach` | Start / rejoin a session manually |
+
+Inside nvim, `,ac` splits a pane running `claude --ide`, which auto-connects to nvim's server. Verify the link with `:ClaudeCodeStatus`.
+
+### Pane navigation
+
+`Ctrl+h/j/k/l` moves seamlessly across nvim windows **and** tmux panes (via smart-splits.nvim + matching tmux bindings). No prefix needed — the same keys work whether the focused pane is nvim or Claude.
+
+> Tradeoff: `Ctrl+h/j/k/l` are grabbed globally in tmux, so the Claude pane can't use them for its own shortcuts (e.g. `Ctrl+l` clear-screen).
+
+### tmux prefix basics
+
+Default prefix is `Ctrl+b` (no custom prefix set yet).
+
+| Key | Action |
+|-----|--------|
+| `Prefix "` | Split pane horizontally (below) |
+| `Prefix %` | Split pane vertically (right) |
+| `Prefix x` | Kill current pane |
+| `Prefix z` | Zoom / unzoom current pane |
+| `Prefix d` | Detach from session |
+| `Prefix [` | Enter copy-mode (scroll/select) |
 
 ---
 
@@ -473,11 +517,12 @@ Sessions auto-save on quit and auto-restore when opening nvim in the same direct
 ,gg      -> Lazygit (full git UI)
 ,sr      -> Search & replace
 ,xx      -> Diagnostics
-,ac      -> Toggle Claude AI
+,ac      -> Toggle Claude pane (tmux)
 ,gh...   -> Git hunk operations
 ]h/[h    -> Next/prev git hunk
 ]q/[q    -> Next/prev trouble item
 gb       -> Pick buffer
-Ctrl+hjkl -> Navigate windows
+Ctrl+hjkl -> Navigate windows + tmux panes
+nv       -> Open nvim inside tmux (shell)
 J/K (visual) -> Move lines up/down
 ```

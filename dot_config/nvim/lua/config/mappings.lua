@@ -3,11 +3,8 @@ vim.g.maplocalleader = ","
 
 local map = vim.keymap.set
 
--- Window navigation
-map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window" })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window" })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window" })
+-- Window navigation: <C-h/j/k/l> now handled by smart-splits.nvim
+-- (crosses the nvim<->tmux boundary). See lua/plugins/navigation.lua.
 
 -- neo-tree
 map("n", "<C-n>", "<cmd>Neotree toggle<CR>", { desc = "Toggle file tree" })
