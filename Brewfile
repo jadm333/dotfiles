@@ -3,6 +3,7 @@
 brew "chezmoi"
 brew "fd"
 brew "fish"
+brew "fisher"
 brew "lazygit"
 brew "ripgrep"
 brew "protonpass/tap/pass-cli"
