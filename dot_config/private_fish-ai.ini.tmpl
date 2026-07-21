@@ -1,0 +1,7 @@
+[fish-ai]
+configuration = anthropic
+
+[anthropic]
+provider = anthropic
+api_key = {{ secret "item" "view" "pass://dotfiles/var.anthropic_api_key/note" }}
+model = claude-sonnet-4-6
