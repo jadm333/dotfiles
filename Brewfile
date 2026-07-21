@@ -18,6 +18,7 @@ brew "tree-sitter-cli"
 brew "imagemagick"
 brew "tmux"
 brew "gh"
+brew "anomalyco/tap/opencode"
 
 # Casks
 cask "font-jetbrains-mono-nerd-font" 
